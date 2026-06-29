@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>본 &amp; 민성 신혼여행 · 스페인 · 남프랑스 (2027.03.02~03.14)</title>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0f172a; --sub:#475569; --mute:#94a3b8;
+    --line:#e2e8f0; --bg:#f8fafc; --card:#ffffff;
+    --blue:#065ef7; --link:#2563eb; --red:#dc2626;
+    --es:#d4380d;   /* 스페인 강조 */
+    --fr:#1d4ed8;   /* 프랑스 강조 */
+    --shadow:0 1px 2px rgba(15,23,42,.04),0 8px 24px rgba(15,23,42,.06);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:"Pretendard","Pretendard Variable",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+    line-height:1.65; -webkit-font-smoothing:antialiased; letter-spacing:-.01em;
+  }
+  a{color:var(--link); text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 18px}
+
+  /* ===== HERO ===== */
+  header.hero{
+    background:var(--ink); color:#fff; padding:38px 0 30px;
+  }
+  .hero .wrap{display:block}
+  .hero .eyebrow{font-size:13px; letter-spacing:.18em; color:#cbd5e1; font-weight:600; text-transform:uppercase}
+  .hero h1{margin:8px 0 4px; font-size:34px; font-weight:800; letter-spacing:-.02em}
+  .hero h1 .amp{color:#fca5a5; font-weight:700; padding:0 6px}
+  .hero .sub{color:#cbd5e1; font-size:15px}
+  .hero .route{
+    margin-top:18px; display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:14px; font-weight:600;
+  }
+  .hero .route .seg{background:rgba(255,255,255,.08); border:1px solid rgba(255,255,255,.14); padding:5px 11px; border-radius:999px}
+  .hero .route .seg.es{box-shadow:inset 3px 0 0 #fca5a5}
+  .hero .route .seg.fr{box-shadow:inset 3px 0 0 #93c5fd}
+  .hero .route .arr{color:#64748b}
+
+  /* ===== FLIGHTS ===== */
+  .flights{display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:22px}
+  .flight{
+    background:rgba(255,255,255,.06); border:1px solid rgba(255,255,255,.12);
+    border-radius:14px; padding:14px 16px;
+  }
+  .flight .tag{font-size:12px; font-weight:700; letter-spacing:.04em; color:#fca5a5}
+  .flight .tag.in{color:#93c5fd}
+  .flight .big{font-size:15px; font-weight:700; margin:4px 0 2px}
+  .flight .small{font-size:13px; color:#cbd5e1}
+  .flight .meta{font-size:12px; color:#94a3b8; margin-top:6px}
+
+  /* ===== STICKY TABS ===== */
+  nav.tabs{position:sticky; top:0; z-index:50; background:rgba(248,250,252,.92); backdrop-filter:blur(8px); border-bottom:1px solid var(--line)}
+  nav.tabs .wrap{display:flex; gap:8px; padding-top:10px; padding-bottom:10px; overflow-x:auto}
+  .tab{
+    flex:0 0 auto; border:1px solid var(--line); background:#fff; color:var(--sub);
+    padding:9px 16px; border-radius:999px; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap;
+    transition:all .15s;
+  }
+  .tab .flag{margin-right:5px}
+  .tab small{display:block; font-size:11px; font-weight:600; color:var(--mute); margin-top:1px}
+  .tab.active{color:#fff; border-color:transparent}
+  .tab[data-c="es1"].active,.tab[data-c="es3"].active{background:var(--es)}
+  .tab[data-c="fr"].active{background:var(--fr)}
+  .tab.active small{color:rgba(255,255,255,.8)}
+
+  /* ===== SECTIONS ===== */
+  main{padding:26px 0 60px}
+  section.country{display:none}
+  section.country.active{display:block; animation:fade .25s ease}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)}to{opacity:1; transform:none}}
+  .country-head{display:flex; align-items:baseline; gap:10px; margin-bottom:4px}
+  .country-head h2{margin:0; font-size:24px; font-weight:800}
+  .country-head .span{color:var(--sub); font-size:14px; font-weight:600}
+  .country-lead{color:var(--sub); font-size:14px; margin:0 0 18px}
+
+  /* day pills */
+  .daynav{display:flex; gap:7px; overflow-x:auto; padding-bottom:12px; margin-bottom:4px}
+  .pill{
+    flex:0 0 auto; border:1px solid var(--line); background:#fff; border-radius:12px;
+    padding:8px 12px; font-size:13px; cursor:pointer; color:var(--sub); font-weight:600; text-align:left; line-height:1.3;
+  }
+  .pill b{display:block; color:var(--ink); font-weight:800; font-size:13px}
+  .pill span{font-size:11px; color:var(--mute)}
+  .pill.active{border-color:var(--ink); background:var(--ink); color:#fff}
+  .pill.active b,.pill.active span{color:#fff}
+
+  /* day panel */
+  .day{display:none}
+  .day.active{display:block; animation:fade .2s ease}
+  .day-card{background:var(--card); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow); overflow:hidden}
+  .day-top{padding:18px 22px; border-bottom:1px solid var(--line); display:flex; align-items:center; gap:14px; background:#fff}
+  .day-no{
+    flex:0 0 auto; width:54px; height:54px; border-radius:14px; background:var(--ink); color:#fff;
+    display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:800; line-height:1;
+  }
+  .day-no .n{font-size:20px} .day-no .l{font-size:9px; letter-spacing:.1em; margin-top:3px; color:#cbd5e1}
+  .day-top .info h3{margin:0; font-size:19px; font-weight:800}
+  .day-top .info .d{font-size:13px; color:var(--sub); font-weight:600; margin-top:2px}
+  .stay{margin-left:auto; flex:0 0 auto; font-size:12px; font-weight:700; color:var(--sub); background:var(--bg); border:1px solid var(--line); padding:6px 11px; border-radius:999px; white-space:nowrap}
+  .day-body{padding:20px 22px}
+
+  /* move box */
+  .move{display:flex; gap:12px; background:#f1f5f9; border:1px solid #e2e8f0; border-left:4px solid var(--ink); border-radius:12px; padding:13px 15px; margin-bottom:18px}
+  .move.es{border-left-color:var(--es)} .move.fr{border-left-color:var(--fr)} .move.air{border-left-color:#0f766e}
+  .move .ic{font-size:20px; line-height:1.3}
+  .move .mtxt{font-size:13.5px}
+  .move .mtxt b{font-weight:800}
+  .move .mtxt .ko{color:var(--sub)}
+
+  /* activities */
+  .acts{list-style:none; padding:0; margin:0 0 16px}
+  .acts li{position:relative; padding:7px 0 7px 26px; border-bottom:1px dashed #eef2f7; font-size:14.5px}
+  .acts li:last-child{border-bottom:0}
+  .acts li::before{content:""; position:absolute; left:6px; top:14px; width:7px; height:7px; border-radius:50%; background:var(--ink)}
+  .acts li .nm{font-weight:700}
+  .acts li .ds{color:var(--sub)}
+  .acts li.book::before{background:var(--es)}
+  .acts li .badge{display:inline-block; font-size:11px; font-weight:800; color:#fff; background:var(--es); padding:1px 7px; border-radius:6px; margin-left:6px; vertical-align:middle}
+  .acts li .badge.hi{background:var(--blue)}
+  .acts li .tag-city{display:inline-block; font-size:11px; font-weight:800; color:var(--fr); background:#eff6ff; border:1px solid #dbeafe; padding:1px 7px; border-radius:6px; margin-right:6px}
+
+  /* city note + tip */
+  .note{background:#fff; border:1px solid var(--line); border-radius:12px; padding:12px 15px; margin-bottom:12px}
+  .note .lab{font-size:11px; font-weight:800; letter-spacing:.04em; color:var(--mute); text-transform:uppercase}
+  .note p{margin:4px 0 0; font-size:13.5px; color:var(--sub)}
+  .tip{font-size:13px; color:var(--sub); background:#fffbeb; border:1px solid #fde68a; border-radius:12px; padding:11px 14px}
+  .tip b{color:#b45309}
+
+  /* border-cross callout */
+  .border{background:#eff6ff; border:1px solid #bfdbfe; border-radius:12px; padding:14px 16px; margin-bottom:18px}
+  .border .lab{font-size:12px; font-weight:800; color:var(--fr); margin-bottom:8px}
+  .border ul{margin:0; padding-left:18px; font-size:13px; color:var(--sub)}
+  .border ul li{margin:3px 0}
+  .border ul li b{color:var(--ink)}
+
+  /* ===== checklist / download ===== */
+  .panel{background:var(--card); border:1px solid var(--line); border-radius:18px; box-shadow:var(--shadow); padding:24px; margin-top:26px}
+  .panel h2{margin:0 0 4px; font-size:20px; font-weight:800}
+  .panel .h-sub{color:var(--sub); font-size:13px; margin:0 0 16px}
+  .checks{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+  .check{display:flex; gap:10px; padding:12px 14px; border:1px solid var(--line); border-radius:12px; background:#fff; font-size:13.5px}
+  .check .k{font-size:18px}
+  .check b{display:block; font-weight:800}
+  .check span{color:var(--sub); font-size:12.5px}
+  .dls{display:flex; flex-wrap:wrap; gap:12px; margin-top:6px}
+  .dl{display:flex; align-items:center; gap:10px; padding:14px 18px; border-radius:14px; border:1px solid var(--line); background:#fff; font-weight:700; font-size:14px; color:var(--ink); box-shadow:var(--shadow)}
+  .dl:hover{text-decoration:none; border-color:var(--ink)}
+  .dl .k{font-size:20px}
+  .dl small{display:block; font-weight:600; font-size:11.5px; color:var(--mute)}
+
+  footer{padding:30px 0 50px; color:var(--mute); font-size:12px; text-align:center}
+  footer a{color:var(--sub)}
+
+  @media(max-width:760px){
+    .hero h1{font-size:26px}
+    .flights{grid-template-columns:1fr}
+    .checks{grid-template-columns:1fr}
+    .stay{display:none}
+    .day-body{padding:16px}
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Honeymoon · Spain &amp; South of France</div>
+    <h1>본<span class="amp">&amp;</span>민성 신혼여행</h1>
+    <div class="sub">2027.03.02 (화) ~ 03.14 (일) · 12박 13일 · 바르셀로나 · 지로나 · 몽펠리에 · 아비뇽 · 니스</div>
+
+    <div class="route">
+      <span class="seg es">🇪🇸 바르셀로나 2박</span><span class="arr">›</span>
+      <span class="seg es">🇪🇸 지로나 1박</span><span class="arr">›</span>
+      <span class="seg fr">🇫🇷 몽펠리에 1박</span><span class="arr">›</span>
+      <span class="seg fr">🇫🇷 아비뇽 2박</span><span class="arr">›</span>
+      <span class="seg fr">🇫🇷 니스 4박</span><span class="arr">›</span>
+      <span class="seg es">🇪🇸 바르셀로나 2박</span>
+    </div>
+
+    <div class="flights">
+      <div class="flight">
+        <span class="tag">▲ 가는 편 · OZ511 아시아나</span>
+        <div class="big">서울(인천) T2 → 바르셀로나 T1</div>
+        <div class="small">3/2 (화) 11:15 → 17:50 · 비행 14H35M</div>
+        <div class="meta">예약등급 X · 좌석 35J · 무료수하물 1PC</div>
+      </div>
+      <div class="flight">
+        <span class="tag in">▼ 오는 편 · OZ512 아시아나</span>
+        <div class="big">바르셀로나 T1 → 서울(인천) T2</div>
+        <div class="small">3/14 (일) 출발</div>
+        <div class="meta">운임 XLG · 무료수하물 1PC</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TABS ============ -->
+<nav class="tabs">
+  <div class="wrap">
+    <button class="tab active" data-c="es1" onclick="showCountry('es1')"><span class="flag">🇪🇸</span>스페인 1차<small>3/2~3/4 · 바르셀로나·지로나</small></button>
+    <button class="tab" data-c="fr" onclick="showCountry('fr')"><span class="flag">🇫🇷</span>남프랑스<small>3/5~3/11 · 몽펠리에·아비뇽·니스</small></button>
+    <button class="tab" data-c="es3" onclick="showCountry('es3')"><span class="flag">🇪🇸</span>스페인 2차<small>3/12~3/14 · 바르셀로나</small></button>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ===================== 스페인 1차 ===================== -->
+<section class="country active" id="es1">
+  <div class="country-head"><h2>🇪🇸 스페인 1차</h2><span class="span">바르셀로나 2박 · 지로나 1박</span></div>
+  <p class="country-lead">가우디의 도시 바르셀로나에서 시작, 중세 성벽 도시 지로나로 마무리</p>
+
+  <div class="daynav">
+    <button class="pill active" onclick="showDay('es1',1)"><b>DAY 1</b><span>3/2 화 · 바르셀로나</span></button>
+    <button class="pill" onclick="showDay('es1',2)"><b>DAY 2</b><span>3/3 수 · 가우디</span></button>
+    <button class="pill" onclick="showDay('es1',3)"><b>DAY 3</b><span>3/4 목 · 지로나</span></button>
+  </div>
+
+  <!-- DAY 1 -->
+  <div class="day active" id="es1-1">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">1</span><span class="l">DAY</span></div>
+        <div class="info"><h3>바르셀로나 도착</h3><div class="d">3/2 (화) · 17:50 BCN 도착</div></div>
+        <div class="stay">🛏 바르셀로나 1박</div>
+      </div>
+      <div class="day-body">
+        <div class="move air">
+          <div class="ic">🚕</div>
+          <div class="mtxt"><b>공항(El Prat) → 시내 숙소</b> · 저녁 도착 + 캐리어 → <b>택시 추천</b> (약 25~35분, T1 약 €39 / T2 약 €30)<br>
+          <span class="ko">대안: Aerobús 약 35분(€6.75~, 카탈루냐 광장 종점 → 람블라스 도보) · 메트로 L9는 환승·짐 부담으로 비추천</span></div>
+        </div>
+        <ul class="acts">
+          <li><span class="nm">람블라스(La Rambla) 거리</span> <span class="ds">— 카탈루냐 광장~콜럼버스 기념탑 1.2km, 거리 공연의 메인 가로수길</span></li>
+          <li><span class="nm">보케리아 시장</span> <span class="ds">— 람블라스의 200여 점포 최대 식료품 시장 (저녁 분위기만 가볍게)</span></li>
+          <li><span class="nm">바르셀로네타 해변 야경</span> <span class="ds">— 콜럼버스 기념탑 전망대에서 도시·지중해 파노라마</span></li>
+          <li><span class="nm">고딕지구(Barri Gòtic) 산책</span> <span class="ds">— 자갈 골목·숨은 광장에서 첫 저녁 타파스</span></li>
+        </ul>
+        <div class="note"><div class="lab">바르셀로나</div><p>카탈루냐의 주도, 가우디 모더니즘 건축과 지중해가 어우러진 예술·미식의 도시</p></div>
+        <div class="tip"><b>TIP</b> 람블라스 야간 소매치기 주의 · 첫날은 무리한 일정보다 도착 후 가벼운 산책+휴식 권장</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 2 -->
+  <div class="day" id="es1-2">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">2</span><span class="l">DAY</span></div>
+        <div class="info"><h3>바르셀로나 · 가우디 투어</h3><div class="d">3/3 (수)</div></div>
+        <div class="stay">🛏 바르셀로나 2박</div>
+      </div>
+      <div class="day-body">
+        <ul class="acts">
+          <li class="book"><span class="nm">사그라다 파밀리아</span><span class="badge">예약필수</span> <span class="ds">— 가우디 미완성 대성당, 최소 2개월 전 공식 홈페이지 기명 예매(신분증 지참)</span></li>
+          <li class="book"><span class="nm">구엘 공원</span><span class="badge">시간대 예약</span> <span class="ds">— 모뉴멘털 존 30분 단위 예약제, 성수기 48~72h 전 매진</span></li>
+          <li><span class="nm">카사 바트요</span> <span class="ds">— 파세이그 데 그라시아의 가우디 대표작, 온라인 예매 시 할인</span></li>
+          <li><span class="nm">카사 밀라(라 페드레라)</span> <span class="ds">— 옥상 야간 시청각 쇼 + 카바 한 잔이 신혼여행 인기</span></li>
+        </ul>
+        <div class="tip"><b>TIP</b> 일몰은 구엘 공원 테라스에서 · 가우디 명소는 모두 사전 예매로 대기줄 회피</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 3 -->
+  <div class="day" id="es1-3">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">3</span><span class="l">DAY</span></div>
+        <div class="info"><h3>바르셀로나 → 지로나</h3><div class="d">3/4 (목)</div></div>
+        <div class="stay">🛏 지로나 1박</div>
+      </div>
+      <div class="day-body">
+        <div class="move es">
+          <div class="ic">🚄</div>
+          <div class="mtxt"><b>Renfe AVANT 고속열차 약 40분</b> · Barcelona Sants → Girona<br>
+          <span class="ko">예약 renfe.com / 앱 (좌석지정, 미리 예매 권장) · 대안 Rodalies R11 완행 약 1시간 20분(예약 불필요·저렴)</span></div>
+        </div>
+        <ul class="acts">
+          <li><span class="nm">오냐르 강변 색색집</span> <span class="ds">— 에펠교(Pont de les Peixateries Velles)에서 보는 전망이 베스트</span></li>
+          <li><span class="nm">지로나 대성당</span> <span class="ds">— 세계 최대 고딕 본당, 90개 바로크 계단 · 왕좌의 게임 '베일러 대성소'</span></li>
+          <li><span class="nm">유대인지구(El Call)</span> <span class="ds">— 유럽에서 가장 잘 보존된 중세 유대인 거주지</span></li>
+          <li><span class="nm">아랍 목욕탕</span> <span class="ds">— 12세기 로마네스크 양식, 팔각형 욕조</span></li>
+          <li><span class="nm">성벽길(Passeig de la Muralla)</span> <span class="ds">— 9세기 성벽 위 무료 산책로, 일몰 전망 명소</span></li>
+        </ul>
+        <div class="note"><div class="lab">지로나</div><p>바르셀로나에서 고속열차 40분, 중세 성벽과 강변 색색집이 아름다운 미식 도시 · 왕좌의 게임 촬영지</p></div>
+        <div class="tip"><b>TIP</b> 푸하다 데 산 도메넥 계단('스페인에서 가장 로맨틱한 모퉁이') 야외 식사 추천</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 남프랑스 ===================== -->
+<section class="country" id="fr">
+  <div class="country-head"><h2>🇫🇷 남프랑스</h2><span class="span">몽펠리에 1박 · 아비뇽 2박 · 니스 4박</span></div>
+  <p class="country-lead">국경을 넘어 프로방스·코트다쥐르로 — 교황의 도시와 리비에라, 베르동 협곡까지</p>
+
+  <div class="daynav">
+    <button class="pill active" onclick="showDay('fr',4)"><b>DAY 4</b><span>3/5 금 · 몽펠리에</span></button>
+    <button class="pill" onclick="showDay('fr',5)"><b>DAY 5</b><span>3/6 토 · 아비뇽</span></button>
+    <button class="pill" onclick="showDay('fr',6)"><b>DAY 6</b><span>3/7 일 · 아를·뤼베롱</span></button>
+    <button class="pill" onclick="showDay('fr',7)"><b>DAY 7</b><span>3/8 월 · 니스</span></button>
+    <button class="pill" onclick="showDay('fr',8)"><b>DAY 8</b><span>3/9 화 · 베르동</span></button>
+    <button class="pill" onclick="showDay('fr',9)"><b>DAY 9</b><span>3/10 수 · 에즈·모나코</span></button>
+    <button class="pill" onclick="showDay('fr',10)"><b>DAY 10</b><span>3/11 목 · 니스 자유</span></button>
+  </div>
+
+  <!-- DAY 4 -->
+  <div class="day active" id="fr-4">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">4</span><span class="l">DAY</span></div>
+        <div class="info"><h3>지로나 → 몽펠리에 <span style="font-size:13px;color:var(--fr)">🌍 국경 통과</span></h3><div class="d">3/5 (금)</div></div>
+        <div class="stay">🛏 몽펠리에 1박</div>
+      </div>
+      <div class="day-body">
+        <div class="move fr">
+          <div class="ic">🚄</div>
+          <div class="mtxt"><b>국제 AVE 직행 약 2~2.5시간</b> (지로나 정차편 활용) · Girona → Montpellier<br>
+          <span class="ko">직행 편수가 적음 → 없으면 페르피냥/나르본 환승(약 3~4h, Renfe+SNCF) · 프랑스 구간 예약은 SNCF Connect</span></div>
+        </div>
+        <div class="border">
+          <div class="lab">🌍 스페인 → 프랑스 국경 주의사항</div>
+          <ul>
+            <li><b>여권심사</b> — 둘 다 솅겐, 상시 심사 없음 / 단 무작위 검문 대비 여권 휴대 필수</li>
+            <li><b>통화</b> — 둘 다 유로(€), 환전 불필요 · <b>시간대</b> — 둘 다 CET, 조정 불필요</li>
+            <li><b>예약앱 전환</b> — 스페인 Renfe → 프랑스 SNCF Connect 로 변경</li>
+            <li><b>표 분리</b> — 직행 AVE면 한 표 / 환승이면 표를 따로 구매(연착 책임도 분리)</li>
+          </ul>
+        </div>
+        <ul class="acts">
+          <li><span class="nm">코메디 광장</span> <span class="ds">— 1755년 타원형 광장, 삼미신 분수와 오페라 극장</span></li>
+          <li><span class="nm">구시가지(에퀴송)</span> <span class="ds">— 부티크·공방이 이어지는 중세 보행자 골목</span></li>
+          <li><span class="nm">페이루 산책로 + 개선문</span> <span class="ds">— 루이 14세 기마상·송수교, 몽펠리에 일몰 명소</span></li>
+          <li><span class="nm">생피에르 대성당</span> <span class="ds">— 구시가지 위로 솟은 고딕 성당</span></li>
+        </ul>
+        <div class="note"><div class="lab">몽펠리에</div><p>남프랑스 옥시타니의 대학 도시, 코메디 광장과 중세 골목의 대규모 보행자 구역</p></div>
+        <div class="tip"><b>TIP</b> 페이루 산책로 황금빛 일몰이 가장 로맨틱 · 짐 많으면 Avignon Centre 직행 동선 고려</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 5 -->
+  <div class="day" id="fr-5">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">5</span><span class="l">DAY</span></div>
+        <div class="info"><h3>몽펠리에 → 아비뇽</h3><div class="d">3/6 (토)</div></div>
+        <div class="stay">🛏 아비뇽 1박</div>
+      </div>
+      <div class="day-body">
+        <div class="move fr">
+          <div class="ic">🚄</div>
+          <div class="mtxt"><b>TER 약 1시간 15분</b> · Montpellier Saint-Roch → Avignon Centre(시내역)<br>
+          <span class="ko">TER은 예약 불필요·당일 발권 가능 · 거의 매시간 운행</span></div>
+        </div>
+        <ul class="acts">
+          <li><span class="nm">교황청(Palais des Papes)</span> <span class="ds">— 14세기 세계 최대 고딕 궁전, '히스토패드' 태블릿 관람</span></li>
+          <li><span class="nm">생베네제 다리(Pont d'Avignon)</span> <span class="ds">— 론 강을 가로지른 12세기 다리, 동요로 유명</span></li>
+          <li><span class="nm">로셰 데 돔 정원</span> <span class="ds">— 교황청 위 언덕 공원, 론 강·다리 일몰·야경 전망</span></li>
+        </ul>
+        <div class="note"><div class="lab">아비뇽</div><p>14세기 교황청이 있던 교황의 도시, 프로방스·뤼베롱 여행의 거점</p></div>
+        <div class="tip"><b>TIP</b> 해 진 뒤 로셰 데 돔은 한산해 론 강·생베네제 다리 전망을 독차지</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 6 -->
+  <div class="day" id="fr-6">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">6</span><span class="l">DAY</span></div>
+        <div class="info"><h3>아비뇽 당일치기 · 아를 &amp; 뤼베롱</h3><div class="d">3/7 (일)</div></div>
+        <div class="stay">🛏 아비뇽 2박</div>
+      </div>
+      <div class="day-body">
+        <div class="move fr">
+          <div class="ic">🚄🚗</div>
+          <div class="mtxt"><b>아를 = TER 약 15~20분</b> (Avignon Centre, 당일 발권) · <b>고르드·뤼베롱 = 렌터카/투어 필수</b> (기차 없음, 차로 약 40~50분)<br>
+          <span class="ko">고르드·세낭크 수도원·루시용은 가까이 모여 있어 한 번에 묶어 이동</span></div>
+        </div>
+        <ul class="acts">
+          <li><span class="tag-city">아를</span><span class="nm">밤의 카페테라스</span> <span class="ds">— 반 고흐 1888년 그림의 실제 무대(포룸 광장)</span></li>
+          <li><span class="tag-city">아를</span><span class="nm">에스파스 반 고흐 · 원형경기장</span> <span class="ds">— 옛 병원 회랑 정원 / 1세기 로마 원형경기장</span></li>
+          <li><span class="tag-city">뤼베롱</span><span class="nm">절벽마을 고르드</span> <span class="ds">— 돌집과 계곡 전망, '프랑스에서 가장 아름다운 마을'</span></li>
+          <li><span class="tag-city">뤼베롱</span><span class="nm">세낭크 수도원 · 루시용</span> <span class="ds">— 12세기 시토회 수도원 / 황토빛 붉은마을</span></li>
+        </ul>
+        <div class="tip"><b>TIP</b> 아를(남)·고르드(동) 방향이 달라 종일도 빠듯 → <b>뤼베롱 데이투어</b> 또는 한쪽 우선 추천 · 3월은 라벤더 미개화(개화 6월 중순~)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 7 -->
+  <div class="day" id="fr-7">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">7</span><span class="l">DAY</span></div>
+        <div class="info"><h3>아비뇽 → 니스</h3><div class="d">3/8 (월)</div></div>
+        <div class="stay">🛏 니스 1박</div>
+      </div>
+      <div class="day-body">
+        <div class="move fr">
+          <div class="ic">🚄</div>
+          <div class="mtxt"><b>TGV 약 3~3.5시간</b> · Avignon TGV → Nice Ville (마르세유 경유)<br>
+          <span class="ko">직통 편수 적음 → 없으면 Marseille St-Charles 환승 · 예약 SNCF Connect (조기예매 시 저렴) · 시내역이면 셔틀로 Avignon TGV 이동</span></div>
+        </div>
+        <ul class="acts">
+          <li><span class="nm">프롬나드 데 장글레</span> <span class="ds">— 천사의 만을 따라 7km 산책로</span></li>
+          <li><span class="nm">구시가지(Vieux Nice) + 쿠르 살레야 시장</span> <span class="ds">— 자갈길·바로크 성당, 꽃·식료품 시장(월요일 휴무)</span></li>
+          <li><span class="nm">마세나 광장</span> <span class="ds">— 흑백 체크 바닥과 분수의 대표 만남의 장소</span></li>
+          <li><span class="nm">성채언덕(Colline du Château)</span> <span class="ds">— 시가지·항구·천사의 만 파노라마, 일몰 전망</span></li>
+        </ul>
+        <div class="note"><div class="lab">니스</div><p>코트다쥐르(프렌치 리비에라)의 수도, 7km 자갈 해변과 프롬나드 데 장글레의 휴양 도시</p></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 8 -->
+  <div class="day" id="fr-8">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">8</span><span class="l">DAY</span></div>
+        <div class="info"><h3>니스 렌트 Day 1 · 베르동 협곡 <span class="badge hi" style="display:inline-block;font-size:11px;font-weight:800;color:#fff;background:var(--blue);padding:1px 7px;border-radius:6px;">하이라이트</span></h3><div class="d">3/9 (화)</div></div>
+        <div class="stay">🛏 니스 2박</div>
+      </div>
+      <div class="day-body">
+        <div class="move air">
+          <div class="ic">🚗</div>
+          <div class="mtxt"><b>렌터카 (니스 공항 픽업)</b> · 베르동 협곡 편도 약 2시간 30분 · 종일 9~10시간 일정<br>
+          <span class="ko">좁고 굽이진 산악도로 여유 운전 · 프랑스 저배출구역(ZFE) 대비 Crit'Air 스티커 부착 확인</span></div>
+        </div>
+        <ul class="acts">
+          <li><span class="nm">베르동 협곡(Gorges du Verdon)</span> <span class="ds">— '유럽의 그랜드캐니언', 에메랄드빛 협곡</span></li>
+          <li><span class="nm">생트크루아 호수</span> <span class="ds">— 청록~에메랄드빛 물빛, 페달보트·카약·수영</span></li>
+          <li><span class="nm">무스티에생트마리 마을</span> <span class="ds">— 절벽에 안긴 도자기 마을, 점심 코스</span></li>
+        </ul>
+        <div class="tip"><b>TIP</b> 신혼여행 최고 하이라이트 · 사진은 Pont du Galetas 다리 부근 / 운전 피로 고려해 무리하지 않기</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 9 -->
+  <div class="day" id="fr-9">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">9</span><span class="l">DAY</span></div>
+        <div class="info"><h3>니스 렌트 Day 2 · 에즈 · 칸 · 모나코</h3><div class="d">3/10 (수)</div></div>
+        <div class="stay">🛏 니스 3박</div>
+      </div>
+      <div class="day-body">
+        <div class="move air">
+          <div class="ic">🚗</div>
+          <div class="mtxt"><b>렌터카 코르니슈 드라이브</b> · 에즈 약 15분 · 칸 약 33분 · 모나코 약 25~30분<br>
+          <span class="ko">모나코 주차: Casino(Boulingrins)·Pêcheurs 주차장(야간 19시~ 저렴) · 모나코는 기차도 25분 이내로 편리</span></div>
+        </div>
+        <ul class="acts">
+          <li><span class="nm">에즈(Èze) 절벽마을</span> <span class="ds">— 절벽 위 중세 마을, 지중해 파노라마(샤토 에자)</span></li>
+          <li><span class="nm">칸(Cannes)</span> <span class="ds">— 라 크루아제트 산책로, 영화제의 팔레 데 페스티발</span></li>
+          <li><span class="nm">모나코</span> <span class="ds">— 대공궁·대성당, 몬테카를로 카지노, F1 시가지 서킷</span></li>
+        </ul>
+        <div class="tip"><b>TIP</b> 그랑드/바스 코르니슈 경관 드라이브가 백미 · 운전이 부담이면 모나코·에즈는 기차+버스 조합도 가능</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 10 -->
+  <div class="day" id="fr-10">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">10</span><span class="l">DAY</span></div>
+        <div class="info"><h3>니스 자유 · 휴식</h3><div class="d">3/11 (목)</div></div>
+        <div class="stay">🛏 니스 4박</div>
+      </div>
+      <div class="day-body">
+        <ul class="acts">
+          <li><span class="nm">마티스 미술관 / 구시가지 재방문</span> <span class="ds">— 예술·문화의 도시 니스의 미술관</span></li>
+          <li><span class="nm">앙티브 또는 모나코 기차 당일치기</span> <span class="ds">— 선택, 억만장자의 부두·구시가지 시장</span></li>
+          <li><span class="nm">프롬나드 일몰 산책 · 해변 휴식</span> <span class="ds">— 4박 도시인 만큼 하루는 여유롭게</span></li>
+        </ul>
+        <div class="tip"><b>TIP</b> 렌터카 반납일·시간 확인 · 다음 날 아침 비행 대비 짐 정리</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 스페인 2차 ===================== -->
+<section class="country" id="es3">
+  <div class="country-head"><h2>🇪🇸 스페인 2차</h2><span class="span">바르셀로나 2박 · 마무리</span></div>
+  <p class="country-lead">다시 바르셀로나로 — 야경·산책·미식·쇼핑으로 여유로운 마무리</p>
+
+  <div class="daynav">
+    <button class="pill active" onclick="showDay('es3',11)"><b>DAY 11</b><span>3/12 금 · 바르셀로나</span></button>
+    <button class="pill" onclick="showDay('es3',12)"><b>DAY 12</b><span>3/13 토 · 마무리</span></button>
+    <button class="pill" onclick="showDay('es3',13)"><b>DAY 13</b><span>3/14 일 · 귀국</span></button>
+  </div>
+
+  <!-- DAY 11 -->
+  <div class="day active" id="es3-11">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">11</span><span class="l">DAY</span></div>
+        <div class="info"><h3>니스 → 바르셀로나</h3><div class="d">3/12 (금)</div></div>
+        <div class="stay">🛏 바르셀로나 1박</div>
+      </div>
+      <div class="day-body">
+        <div class="move air">
+          <div class="ic">✈️</div>
+          <div class="mtxt"><b>Vueling 직항 아침편 약 1시간 20분</b> · 예: 08:10 NCE → 09:30 BCN (NCE T1 → BCN T1)<br>
+          <span class="ko">주 약 6회 운항 → 요일 확인 필수 · 저비용항공 수하물 규정(추가요금) 사전 체크</span></div>
+        </div>
+        <ul class="acts">
+          <li><span class="nm">몬주익 언덕 / 마법의 분수 야경</span> <span class="ds">— 물·빛·음악 무료 분수쇼 (겨울 목·금·토 20:00~21:00)</span></li>
+          <li><span class="nm">보른지구(El Born) 저녁 산책</span> <span class="ds">— 산타 마리아 델 마르 성당·자갈길, 타파스</span></li>
+        </ul>
+        <div class="tip"><b>TIP</b> 3/12은 금요일 → 마법의 분수 쇼 운영일 · 공항에서 시내 동선은 첫날과 동일</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 12 -->
+  <div class="day" id="es3-12">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">12</span><span class="l">DAY</span></div>
+        <div class="info"><h3>바르셀로나 마무리</h3><div class="d">3/13 (토)</div></div>
+        <div class="stay">🛏 바르셀로나 2박</div>
+      </div>
+      <div class="day-body">
+        <ul class="acts">
+          <li><span class="nm">벙커 델 카르멜 전망</span> <span class="ds">— 투로 데 라 로비라 정상 360도 파노라마(사그라다·바다)</span></li>
+          <li><span class="nm">보른·고딕지구 산책</span> <span class="ds">— 산타 마리아 델 마르 성당 매일 18:00~ 무료 입장</span></li>
+          <li><span class="nm">파세이그 데 그라시아 쇼핑 / 보케리아 미식</span> <span class="ds">— 카탈루냐 타파스와 마지막 쇼핑</span></li>
+        </ul>
+        <div class="tip"><b>TIP</b> 벙커는 일몰 전 출입문이 닫히는 경우가 있어 이른 시간 방문 안전 · 귀국 짐 정리</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- DAY 13 -->
+  <div class="day" id="es3-13">
+    <div class="day-card">
+      <div class="day-top">
+        <div class="day-no"><span class="n">13</span><span class="l">DAY</span></div>
+        <div class="info"><h3>귀국</h3><div class="d">3/14 (일)</div></div>
+        <div class="stay">✈️ ICN 도착</div>
+      </div>
+      <div class="day-body">
+        <div class="move air">
+          <div class="ic">✈️</div>
+          <div class="mtxt"><b>OZ512 아시아나</b> · 바르셀로나 T1 → 서울(인천) T2<br>
+          <span class="ko">운임 XLG · 무료수하물 1PC · 공항 도착은 출발 3시간 전 권장</span></div>
+        </div>
+        <ul class="acts">
+          <li><span class="nm">출국 전 시간 여유 시</span> <span class="ds">— 람블라스/고딕지구 마지막 산책, 기념품</span></li>
+        </ul>
+        <div class="tip"><b>TIP</b> EU 부가세 환급(Tax Free)은 공항 출국장에서 처리 · 면세 한도·세관 확인</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 예약 체크리스트 ===================== -->
+<div class="panel">
+  <h2>✅ 미리 예약 · 확인 체크리스트</h2>
+  <p class="h-sub">시간 지정·매진·요일 운항 등으로 사전 확보가 필요한 항목</p>
+  <div class="checks">
+    <div class="check"><span class="k">⛪</span><div><b>사그라다 파밀리아</b><span>최소 2개월 전 공식 홈페이지 기명 예매</span></div></div>
+    <div class="check"><span class="k">🌳</span><div><b>구엘 공원</b><span>모뉴멘털 존 30분 단위 시간대 예약제</span></div></div>
+    <div class="check"><span class="k">🏛</span><div><b>카사 바트요 · 카사 밀라</b><span>온라인 예매 시 할인 + 대기줄 회피</span></div></div>
+    <div class="check"><span class="k">🚄</span><div><b>지로나 → 몽펠리에 국경열차</b><span>직행 편수 적음, 가장 먼저 예약 확보</span></div></div>
+    <div class="check"><span class="k">🚗</span><div><b>니스 렌터카 (2일)</b><span>공항 픽업 · Crit'Air 스티커 부착 확인</span></div></div>
+    <div class="check"><span class="k">✈️</span><div><b>뷰엘링 니스→바르셀로나</b><span>주 6회 운항 요일 확인 + 수하물 규정</span></div></div>
+  </div>
+</div>
+
+<!-- ===================== 다운로드 ===================== -->
+<div class="panel">
+  <h2>📥 파일 다운로드</h2>
+  <p class="h-sub">집에서도 수정할 수 있도록 HTML 본문과 NHN 디자인 양식 파일을 내려받으세요</p>
+  <div class="dls">
+    <a class="dl" href="index.html" download="본민성_신혼여행_일정.html"><span class="k">📄</span><div>신혼여행 일정 HTML<small>이 페이지 원본 파일</small></div></a>
+    <a class="dl" href="assets/nhn-template.html" download="NHN_디자인_양식.html"><span class="k">🎨</span><div>NHN 디자인 양식 파일<small>같은 스타일로 새 문서 제작용 템플릿</small></div></a>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  본 &amp; 민성 신혼여행 일정 · 2027.03.02~03.14 · 스페인 · 남프랑스<br>
+  이동·요금·운영시간은 출발 2~3개월 전 각 공식 사이트에서 재확인 권장
+</footer>
+
+<script>
+  function showCountry(c){
+    document.querySelectorAll('section.country').forEach(s=>s.classList.toggle('active', s.id===c));
+    document.querySelectorAll('nav.tabs .tab').forEach(t=>t.classList.toggle('active', t.dataset.c===c));
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+  function showDay(c, n){
+    var sec=document.getElementById(c);
+    sec.querySelectorAll('.day').forEach(d=>d.classList.remove('active'));
+    sec.querySelector('#'+c+'-'+n).classList.add('active');
+    var pills=sec.querySelectorAll('.pill');
+    pills.forEach(p=>p.classList.remove('active'));
+    var idx=[...sec.querySelectorAll('.day')].findIndex(d=>d.id===c+'-'+n);
+    if(pills[idx]) pills[idx].classList.add('active');
+  }
+</script>
+</body>
+</html>
